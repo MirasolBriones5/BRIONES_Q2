@@ -1,0 +1,98 @@
+import java.util.Scanner;
+
+public class PowerLevelAnalysis {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the power levels (single-line input)
+        System.out.println("Enter 10 power levels of creatures (separated by spaces):");
+        int[] powerLevels = new int[10];
+        for (int i = 0; i < 10; i++) {
+            powerLevels[i] = scanner.nextInt();
+        }
+
+        // Bubble Sort: Ascending order
+        int[] bubbleSorted = bubbleSort(powerLevels.clone());
+        System.out.print("Bubble Sort (Ascending): ");
+        displayArray(bubbleSorted);
+
+        // Selection Sort: Descending order
+        int[] selectionSorted = selectionSort(powerLevels.clone());
+        System.out.print("Selection Sort (Descending): ");
+        displayArray(selectionSorted);
+
+        // Calculate and display analysis
+        calculateAndDisplayAnalysis(powerLevels);
+
+        scanner.close();
+    }
+
+    // Bubble Sort Implementation
+    public static int[] bubbleSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    // Swap array[j] and array[j + 1]
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+        return array;
+    }
+
+    // Selection Sort Implementation
+    public static int[] selectionSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            int maxIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                if (array[j] > array[maxIdx]) {
+                    maxIdx = j;
+                }
+            }
+            // Swap the found maximum element with the first element
+            int temp = array[maxIdx];
+            array[maxIdx] = array[i];
+            array[i] = temp;
+        }
+        return array;
+    }
+
+    // Calculate and display analysis
+    public static void calculateAndDisplayAnalysis(int[] array) {
+        int sumEven = 0, sumOdd = 0;
+        int min = array[0], max = array[0];
+
+        for (int power : array) {
+            if (power % 2 == 0) {
+                sumEven += power;
+            } else {
+                sumOdd += power;
+            }
+            if (power < min) {
+                min = power;
+            }
+            if (power > max) {
+                max = power;
+            }
+        }
+
+        System.out.println("Analysis:");
+        System.out.println("Sum of Even Numbers: " + sumEven);
+        System.out.println("Sum of Odd Numbers: " + sumOdd);
+        System.out.println("Minimum Power Level: " + min);
+        System.out.println("Maximum Power Level: " + max);
+    }
+
+    // Display the array
+    public static void displayArray(int[] array) {
+        for (int num : array) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+}
